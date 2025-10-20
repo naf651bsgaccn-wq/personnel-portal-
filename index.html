@@ -1,0 +1,1975 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Personnel Data Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root {
+  --navy-dark: #001f3f;
+  --navy-medium: #003366;
+  --navy-light: #004d99;
+  --accent-gold: #d4af37;
+  --success: #10b981;
+  --danger: #ef4444;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0a1628 0%, #001f3f 50%, #003366 100%);
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.welcome-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 31, 63, 0.97), rgba(0, 51, 102, 0.97));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.welcome-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.welcome-content img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin: 0 auto 1.5rem;
+}
+
+.welcome-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+  font-size: 1.25rem;
+  color: var(--navy-medium);
+  margin-bottom: 1.5rem;
+}
+
+.welcome-instructions {
+  background: #f9fafb;
+  border-left: 4px solid var(--accent-gold);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.welcome-instructions h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 1rem;
+}
+
+.welcome-instructions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: #374151;
+  line-height: 1.8;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+  color: white;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-start:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 31, 63, 0.4);
+}
+
+.cadre-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.btn-cadre {
+  background: linear-gradient(135deg, #ffffff, #f9fafb);
+  border: 3px solid var(--navy-medium);
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  flex: 1;
+  min-width: 240px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cadre:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 51, 102, 0.3);
+  border-color: var(--accent-gold);
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+}
+
+.cadre-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.cadre-icon img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0 auto;
+  display: block;
+}
+
+.cadre-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+.cadre-description {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.btn-back-welcome {
+  background: white;
+  color: var(--navy-dark);
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #d1d5db;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btn-back-welcome:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border-bottom: 2px solid var(--accent-gold);
+}
+
+.sticky-header img {
+  height: 180px;
+  width: 180px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 0.75rem;
+}
+
+.sticky-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+
+.sticky-header h2 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.steps-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 0 1rem;
+  background: white;
+  margin: 0 -1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  flex: 1;
+  max-width: 140px;
+  cursor: pointer;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.step-item.active .step-circle {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-item.completed .step-circle {
+  background: var(--success);
+  color: white;
+}
+
+.step-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-align: center;
+}
+
+.step-item.active .step-label {
+  color: var(--navy-dark);
+}
+
+.step-connector {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background: #e5e7eb;
+  z-index: 1;
+}
+
+.step-item.completed .step-connector {
+  background: var(--success);
+}
+
+.step-item:last-child .step-connector {
+  display: none;
+}
+
+.progress-container {
+  position: sticky;
+  top: 220px;
+  z-index: 999;
+  background: white;
+  padding: 1rem 1.5rem;
+  margin: 0 -1.5rem;
+}
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.step-label-text {
+  font-weight: 600;
+  color: var(--navy-dark);
+  font-size: 0.95rem;
+}
+
+.progress {
+  height: 12px;
+  border-radius: 10px;
+  background: #e5e7eb;
+  flex: 1;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--navy-dark), var(--navy-light));
+  transition: width 0.4s ease;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.progress-percent {
+  font-weight: 700;
+  color: var(--navy-dark);
+  font-size: 0.95rem;
+}
+
+.main-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  margin-top: 2rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.form-section {
+  padding: 1.5rem 0;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--accent-gold);
+}
+
+.section-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 400;
+  margin-left: auto;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.form-control, .form-select {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--navy-medium);
+  box-shadow: 0 0 0 4px rgba(0, 51, 102, 0.1);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.btn {
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-navy {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+  color: white;
+}
+
+.btn-navy:hover {
+  transform: translateY(-2px);
+  color: white;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: white;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  color: white;
+}
+
+.btn-outline-secondary {
+  background: white;
+  color: #6b7280;
+  border: 2px solid #d1d5db;
+}
+
+.btn-outline-secondary:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+.dynamic-item {
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.dynamic-item h6 {
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-gold);
+}
+
+.alert-box {
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: none;
+  font-weight: 600;
+}
+
+.alert-danger {
+  background: #fee2e2;
+  border: 2px solid var(--danger);
+  color: #991b1b;
+}
+
+.autosave-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--success);
+  z-index: 1000;
+}
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.confirmation-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.confirmation-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--accent-gold);
+}
+
+.confirmation-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.confirmation-header-text h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin: 0 0 0.25rem 0;
+}
+
+.confirmation-header-text p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.confirmation-summary {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-section {
+  margin-bottom: 1.5rem;
+}
+
+.summary-section:last-child {
+  margin-bottom: 0;
+}
+
+.summary-section h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 0.75rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.summary-item {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.summary-value {
+  font-size: 0.95rem;
+  color: var(--navy-dark);
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.btn-confirm-submit {
+  background: linear-gradient(135deg, var(--success), #059669);
+  color: white;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: white;
+  color: #6b7280;
+  padding: 0.875rem 2rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.success-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.success-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.success-checkmark {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+}
+
+.checkmark-circle {
+  stroke: var(--success);
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  animation: drawCircle 0.6s ease forwards;
+}
+
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+.checkmark-check {
+  stroke: var(--success);
+  stroke-width: 4;
+  fill: none;
+  stroke-dasharray: 70;
+  stroke-dashoffset: 70;
+  animation: drawCheck 0.4s ease forwards 0.6s;
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.success-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--navy-dark);
+  margin-bottom: 0.5rem;
+}
+
+.success-message {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.receipt-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-download-pdf, .btn-print {
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-download-pdf {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy-medium));
+  color: white;
+}
+
+.btn-print {
+  background: white;
+  color: var(--navy-dark);
+  border: 2px solid var(--navy-dark);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.declaration-box {
+  background: #f3f4f6;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.email-validation {
+  font-size: 0.875rem;
+  color: var(--success);
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.text-danger { color: var(--danger) !important; }
+
+@media (max-width: 768px) {
+  .sticky-header img { height: 120px; width: 120px; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .confirmation-actions { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<!-- WELCOME SCREEN -->
+<div class="welcome-screen" id="welcomeScreen">
+  <div class="welcome-content">
+    <img src="https://i.imgur.com/74e5Ijv.jpeg" alt="Unit Logo"/>
+    <h1 class="welcome-title">Welcome to Sam Enthnan AFB</h1>
+    <h2 class="welcome-subtitle">Personnel Data Portal</h2>
+    
+    <div class="welcome-instructions">
+      <h4>📋 Before You Begin:</h4>
+      <ul>
+        <li>Have your Service ID Card ready for upload</li>
+        <li>Ensure all personal information is accurate</li>
+        <li>Form auto-saves your progress</li>
+        <li>You can navigate freely between all steps</li>
+        <li>All required fields must be completed before submission</li>
+        <li><strong>For more clarification please contact 651BSG Accommodation Office</strong></li>
+      </ul>
+    </div>
+    
+    <button class="btn-start" onclick="showCadreSelection()">START REGISTRATION →</button>
+  </div>
+</div>
+
+<!-- CADRE SELECTION SCREEN -->
+<div class="welcome-screen" id="cadreSelectionScreen" style="display:none;">
+  <div class="welcome-content">
+    <img src="https://i.imgur.com/74e5Ijv.jpeg" alt="Unit Logo"/>
+    <h1 class="welcome-title">Choose Your Cadre</h1>
+    <h2 class="welcome-subtitle">Select your service category to continue</h2>
+    
+    <div class="cadre-buttons">
+      <button class="btn-cadre" onclick="selectCadre('officer')">
+        <div class="cadre-icon">
+          <img src="https://i.imgur.com/jnYWtqF.jpeg" alt="Officers">
+        </div>
+        <div class="cadre-title">OFFICERS</div>
+        <div class="cadre-description">For commissioned officers</div>
+      </button>
+      
+      <button class="btn-cadre" onclick="selectCadre('airmen')">
+        <div class="cadre-icon">
+          <img src="https://i.imgur.com/4jiYFKt.jpeg" alt="Airmen/Airwomen">
+        </div>
+        <div class="cadre-title">AIRMEN/AIRWOMEN</div>
+        <div class="cadre-description">For non-commissioned personnel</div>
+      </button>
+    </div>
+    
+    <button class="btn-back-welcome" onclick="backToWelcome()">← Back to Welcome</button>
+  </div>
+</div>
+
+<!-- AIRMEN/AIRWOMEN FORM CONTAINER -->
+<div class="container py-4" id="mainContainer" style="display:none;">
+  <header class="sticky-header text-center">
+    <img src="https://i.imgur.com/74e5Ijv.jpeg" alt="Unit Logo"/>
+    <h1>Sam Enthnan Air Force Base</h1>
+    <h2>Airmen/Airwomen Personnel Data Portal</h2>
+  </header>
+
+  <div class="main-card">
+    <div class="card-body">
+      <div class="steps-indicator">
+        <div class="step-item active">
+          <div class="step-circle">1</div>
+          <div class="step-label">Personnel</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">2</div>
+          <div class="step-label">Accommodation</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">3</div>
+          <div class="step-label">Dependants</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">4</div>
+          <div class="step-label">Vehicles</div>
+        </div>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-wrapper">
+          <div class="step-label-text" id="stepLabel">Step 1 of 4</div>
+          <div class="progress">
+            <div id="formProgress" class="progress-bar" style="width:25%"></div>
+          </div>
+          <div class="progress-percent" id="progressPercent">25%</div>
+        </div>
+      </div>
+
+      <form id="multiStepForm" novalidate>
+        <div class="form-section">
+          <h5 class="section-title">📋 Personnel Information</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Service Number <span class="text-danger">*</span></label>
+              <input type="text" name="svc_no" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Rank <span class="text-danger">*</span></label>
+              <select name="rank" class="form-select" required>
+                <option value="">Select Rank</option>
+                <option>AWO</option><option>MWO</option><option>WO</option><option>FS</option>
+                <option>SGT</option><option>CPL</option><option>LCPL</option><option>ACM</option><option>ACW</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
+              <input type="text" name="fullname" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last Unit <span class="text-danger">*</span></label>
+              <input type="text" name="last_unit" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Present Unit <span class="text-danger">*</span></label>
+              <input type="text" name="present_unit" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Marital Status <span class="text-danger">*</span></label>
+              <select name="marital_status" class="form-select" required>
+                <option value="">Select Status</option>
+                <option>Married</option><option>Single</option><option>Widow</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email Address <span class="text-danger">*</span></label>
+              <input type="email" name="email" id="emailField" class="form-control" required>
+              <div class="email-validation" id="emailValidation">✓ Valid email</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+              <input type="tel" name="phone" id="phoneField" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Upload Service ID Card<span class="text-danger">*</span></label>
+              <input type="file" name="svc_id_card" id="fileUpload" class="form-control" accept="image/*,application/pdf">
+            </div>
+          </div>
+          <div class="d-grid mt-4">
+            <button type="button" class="btn btn-navy btn-lg next-btn">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-section d-none">
+          <h5 class="section-title">🏠 Accommodation Information</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Block Name <span class="text-danger">*</span></label>
+              <select name="block_name" class="form-select" required>
+                <option value="">Select Block</option>
+                <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+                <option>F</option><option>G</option><option>H</option><option>I</option><option>J</option>
+                <option>K</option><option>L</option><option>M</option><option>N</option><option>O</option>
+                <option>P</option><option>Q</option><option>R</option><option>S</option><option>T</option>
+                <option>U</option><option>V</option><option>W</option><option>X</option><option>Y</option><option>Z</option>
+                <option>STUDIO</option><option>SGT KARATU BLOCK</option><option>Old mammy</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Block Number <span class="text-danger">*</span></label>
+              <select name="block_number" class="form-select" required>
+                <option value="">Select Number</option>
+                <script>for(let i=1;i<=50;i++) document.write(`<option>${i}</option>`);['A','B','C','D','E','F','G'].forEach(l=>document.write(`<option>${l}</option>`));</script>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Flat Number <span class="text-danger">*</span></label>
+              <select name="flat_number" class="form-select" required>
+                <option value="">Select Flat</option>
+                <script>for(let i=1;i<=50;i++) document.write(`<option>${i}</option>`);</script>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Accommodation Type <span class="text-danger">*</span></label>
+              <select name="accommodation_type" class="form-select" required>
+                <option value="">Select Type</option>
+                <option>Full</option><option>Paired</option><option>Transit</option><option>Tied down</option>
+                <option>Two Bedroom</option><option>Three Bedroom</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Block Appointment</label>
+              <input type="text" name="block_appointment" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Upload Authority Letter <span class="text-danger">*</span></label>
+              <input type="file" name="authority_letter" id="authorityLetterUpload" class="form-control" accept="image/*,application/pdf" required>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary prev-btn">← Back</button>
+            <button type="button" class="btn btn-navy next-btn">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-section d-none">
+          <h5 class="section-title">
+            👨‍👩‍👧‍👦 Dependants Information
+            <span class="section-subtitle">Optional</span>
+          </h5>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Number of Dependants</label>
+              <select id="dependantsCount" name="dependants_count" class="form-select">
+                <option value="">Select Number</option>
+                <option>One</option><option>Two</option><option>Three</option>
+                <option>Four</option><option>Five</option><option>Six</option><option>Seven</option>
+              </select>
+            </div>
+          </div>
+          <div id="dependantsContainer"></div>
+          <div class="mb-3">
+            <label class="form-label">All Dependant Passport Photography</label>
+            <input type="file" name="dependant_photos" id="airmenDependantPhotos" class="form-control" accept="image/*" multiple>
+            <small class="text-muted">You can select multiple photos</small>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary prev-btn">← Back</button>
+            <button type="button" class="btn btn-navy next-btn">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-section d-none">
+          <h5 class="section-title">🚗 Vehicles & Declaration</h5>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Number of Vehicles <span class="section-subtitle">Optional</span></label>
+              <select id="vehicleCount" name="vehicle_count" class="form-select">
+                <option value="">Select Number</option>
+                <option>One</option><option>Two</option><option>Three</option><option>Four</option><option>Five</option><option>Six</option>
+              </select>
+            </div>
+          </div>
+          <div id="vehiclesContainer"></div>
+          
+          <div class="mb-3">
+            <label class="form-label">Digital Signature (Full Name) <span class="text-danger">*</span></label>
+            <input type="text" name="signature" class="form-control" required>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Declaration Statement</label>
+            <div class="declaration-box">
+              I hereby declare that the information provided above is true and accurate to the best of my knowledge.
+            </div>
+          </div>
+          
+          <div class="alert-box alert-danger" id="duplicateWarning">
+            ⚠️ Duplicate entry detected.
+          </div>
+          
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary prev-btn">← Back</button>
+            <button type="submit" class="btn btn-success btn-lg">
+              Submit Form <span class="spinner" id="submitSpinner"></span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- OFFICER FORM CONTAINER -->
+<div class="container py-4" id="officerContainer" style="display:none;">
+  <header class="sticky-header text-center">
+    <img src="https://i.imgur.com/74e5Ijv.jpeg" alt="Unit Logo"/>
+    <h1>Sam Enthnan Air Force Base</h1>
+    <h2>Officer Personnel Data Portal</h2>
+  </header>
+
+  <div class="main-card">
+    <div class="card-body">
+      <div class="steps-indicator" id="officerStepsIndicator">
+        <div class="step-item active officer-step-item">
+          <div class="step-circle">1</div>
+          <div class="step-label">Personnel</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-item officer-step-item">
+          <div class="step-circle">2</div>
+          <div class="step-label">Accommodation</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-item officer-step-item">
+          <div class="step-circle">3</div>
+          <div class="step-label">Dependants</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-item officer-step-item">
+          <div class="step-circle">4</div>
+          <div class="step-label">Vehicles</div>
+        </div>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-wrapper">
+          <div class="step-label-text" id="officerStepLabel">Step 1 of 4</div>
+          <div class="progress">
+            <div id="officerFormProgress" class="progress-bar" style="width:25%"></div>
+          </div>
+          <div class="progress-percent" id="officerProgressPercent">25%</div>
+        </div>
+      </div>
+
+      <form id="officerMultiStepForm" novalidate>
+        <div class="form-section officer-section">
+          <h5 class="section-title">📋 Personnel Information</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Rank <span class="text-danger">*</span></label>
+              <select name="rank" class="form-select" required>
+                <option value="">Select Rank</option>
+                <option>AVM</option>
+                <option>AIR CDRE</option>
+                <option>GP CAPT</option>
+                <option>WG CDR</option>
+                <option>SQN LDR</option>
+                <option>FLT LT</option>
+                <option>FG OFFR</option>
+                <option>PLT OFFR</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Name <span class="text-danger">*</span></label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Service Number <span class="text-danger">*</span></label>
+              <input type="text" name="svc_no" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last Unit <span class="text-danger">*</span></label>
+              <input type="text" name="last_unit" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Present Unit <span class="text-danger">*</span></label>
+              <input type="text" name="present_unit" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Marital Status <span class="text-danger">*</span></label>
+              <select name="marital_status" class="form-select" required>
+                <option value="">Select Status</option>
+                <option>Married</option>
+                <option>Single</option>
+                <option>Window</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+              <input type="tel" name="phone" id="officerPhoneField" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Upload Service ID Card <span class="text-danger">*</span></label>
+              <input type="file" name="officer_svc_id_card" id="officerFileUpload" class="form-control" accept="image/*,application/pdf" required>
+            </div>
+          </div>
+          <div class="d-grid mt-4">
+            <button type="button" class="btn btn-navy btn-lg officer-next-btn">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-section officer-section d-none">
+          <h5 class="section-title">🏠 Accommodation Information</h5>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Block Name <span class="text-danger">*</span></label>
+              <select name="block_name" class="form-select" required>
+                <option value="">Select Block</option>
+                <option>MOQ1</option>
+                <option>MOQ2</option>
+                <option>MOQ3</option>
+                <option>SOQ BLK A</option>
+                <option>SOQ BLK B</option>
+                <option>WG CDR MAMADI BLK</option>
+                <option>NEWLY CONSTRUCTED BLK A</option>
+                <option>NEWLY CONSTRUCTED BLK B</option>
+                <option>WG CDR ALABOSUN BLK</option>
+                <option>SQN LDR PL GBENEKANU BLK</option>
+                <option>AIR CDRE AKINBAYO BLK</option>
+                <option>SQN LDR ADIZA BLK</option>
+                <option>SHITTU ALAO STREET</option>
+                <option>SMITH ROAD</option>
+                <option>JOHN CHUKWU STREET</option>
+                <option>NEW TERRACE BUILDING</option>
+                <option>COMD'S TIE DOWN</option>
+                <option>PSO TIED DOWN</option>
+                <option>ETUGBAYE</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Accommodation Type <span class="text-danger">*</span></label>
+              <select name="accommodation_type" class="form-select" required>
+                <option value="">Select Type</option>
+                <option>SOQ</option>
+                <option>MOQ</option>
+                <option>TRANSIT</option>
+                <option>TIED DOWN</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Number of Flats <span class="text-danger">*</span></label>
+              <select name="number_of_flats" class="form-select" required>
+                <option value="">Select Number of Flats</option>
+                <option>DUPLEX</option>
+                <option>BUNGALOW</option>
+                <option>FOUR BEDROOM</option>
+                <option>THREE BEDROOM</option>
+                <option>TWO BEDROOM</option>
+                <option>SINGLE ROOM</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Block Number <span class="text-danger">*</span></label>
+              <select name="block_number" class="form-select" required>
+                <option value="">Select Number</option>
+                <script>for(let i=1;i<=12;i++) document.write(`<option>${i}</option>`);</script>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Flat Number <span class="text-danger">*</span></label>
+              <select name="flat_number" class="form-select" required>
+                <option value="">Select Flat</option>
+                <script>for(let i=1;i<=60;i++) document.write(`<option>${i}</option>`);</script>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date Allocated</label>
+              <input type="date" name="date_allocated" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Allocation Letter</label>
+              <input type="file" name="allocation_letter" class="form-control" accept="image/*,application/pdf">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary officer-prev-btn">← Back</button>
+            <button type="button" class="btn btn-navy officer-next-btn">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-section officer-section d-none">
+          <h5 class="section-title">👨‍👩‍👧‍👦 Dependants Information</h5>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Number of Dependants</label>
+              <select id="officerDependantsCount" name="dependants_count" class="form-select">
+                <option value="">Select Number</option>
+                <option>One</option>
+                <option>Two</option>
+                <option>Three</option>
+                <option>Four</option>
+                <option>Five</option>
+                <option>Six</option>
+                <option>Seven</option>
+                <option>Eight</option>
+              </select>
+            </div>
+          </div>
+          <div id="officerDependantsContainer"></div>
+          <div class="mb-3">
+            <label class="form-label">All Dependant Passport Photography</label>
+            <input type="file" name="dependant_photos" class="form-control" accept="image/*" multiple>
+            <small class="text-muted">You can select multiple photos</small>
+          </div>
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary officer-prev-btn">← Back</button>
+            <button type="button" class="btn btn-navy officer-next-btn">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-section officer-section d-none">
+          <h5 class="section-title">🚗 Vehicles Information</h5>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Number of Vehicles</label>
+              <select id="officerVehicleCount" name="vehicle_count" class="form-select">
+                <option value="">Select Number</option>
+                <option>One</option>
+                <option>Two</option>
+                <option>Three</option>
+                <option>Four</option>
+                <option>Five</option>
+                <option>Six</option>
+              </select>
+            </div>
+          </div>
+          <div id="officerVehiclesContainer"></div>
+          
+          <h5 class="section-title mt-4">📝 Declaration</h5>
+          <div class="mb-3">
+            <div class="declaration-box">
+              I hereby declare that all the information contained in this form is in accordance with facts or truths to the best of my knowledge. I take full responsibility for the correctness of the said information. I am aware that this self declaration statement is subject to review and verification and if such information has been falsified I may be prosecuted.
+            </div>
+          </div>
+          
+          <div class="row g-3 mb-3">
+            <div class="col-md-12">
+              <label class="form-label">Do you agree to this declaration? <span class="text-danger">*</span></label>
+              <select name="declaration_agree" class="form-select" required>
+                <option value="">Select Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary officer-prev-btn">← Back</button>
+            <button type="submit" class="btn btn-success btn-lg">
+              Submit Form <span class="spinner" id="officerSubmitSpinner"></span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="autosave-indicator" id="autosaveIndicator">✓ Auto-saved</div>
+
+<div class="confirmation-modal" id="confirmationModal">
+  <div class="confirmation-content">
+    <div class="confirmation-header">
+      <div class="confirmation-icon">⚠️</div>
+      <div class="confirmation-header-text">
+        <h3>Confirm Your Submission</h3>
+        <p>Please review your information carefully</p>
+      </div>
+    </div>
+    
+    <div class="confirmation-summary" id="confirmationSummary"></div>
+    
+    <div class="confirmation-actions">
+      <button type="button" class="btn-cancel" onclick="closeConfirmation()">← Go Back</button>
+      <button type="button" class="btn-confirm-submit" onclick="confirmSubmission()">Confirm & Submit ✓</button>
+    </div>
+  </div>
+</div>
+
+<div class="success-modal" id="successModal">
+  <div class="success-content">
+    <div class="success-checkmark">
+      <svg viewBox="0 0 100 100">
+        <circle class="checkmark-circle" cx="50" cy="50" r="45"/>
+        <path class="checkmark-check" d="M25,50 L40,65 L75,30"/>
+      </svg>
+    </div>
+    <h3 class="success-title">Submission Successful!</h3>
+    <p class="success-message">Your personnel data has been recorded.</p>
+    
+    <div class="receipt-actions">
+      <button class="btn-download-pdf" onclick="downloadPDF()">📄 Download PDF</button>
+      <button class="btn-print" onclick="printReceipt()">🖨️ Print</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// GLOBAL VARIABLES
+const form = document.getElementById('multiStepForm');
+const sections = document.querySelectorAll('#multiStepForm .form-section');
+const stepItems = document.querySelectorAll('#mainContainer .step-item');
+let currentStep = 0;
+let submittedFormData = null;
+let selectedCadre = null;
+
+// Different Google Script URLs for each cadre
+const AIRMEN_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQD2c2zZ9SX3jZ1WjvQjm7P452PshaQtCwyAi3xLCSWsgtcjXU1LYuOXdRrDB_ZckU2A/exec';
+const OFFICER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAYcDpszWxbimVOUQFPW-0bFYuV1MFkfgVatZjYfNxcll3z5i8aQZ2y4hpT6Xu1s01/exec';
+
+// NAVIGATION FUNCTIONS
+function showCadreSelection() {
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('cadreSelectionScreen').style.display = 'flex';
+}
+
+function backToWelcome() {
+  document.getElementById('cadreSelectionScreen').style.display = 'none';
+  document.getElementById('welcomeScreen').style.display = 'flex';
+}
+
+function selectCadre(cadre) {
+  selectedCadre = cadre;
+  
+  if (cadre === 'airmen') {
+    document.getElementById('cadreSelectionScreen').style.display = 'none';
+    document.getElementById('mainContainer').style.display = 'block';
+  } else if (cadre === 'officer') {
+    document.getElementById('cadreSelectionScreen').style.display = 'none';
+    document.getElementById('officerContainer').style.display = 'block';
+    initOfficerForm();
+  }
+}
+
+// AIRMEN/AIRWOMEN FORM FUNCTIONS
+function showStep(index) {
+  sections.forEach((s, i) => s.classList.toggle('d-none', i !== index));
+  stepItems.forEach((item, i) => {
+    item.classList.remove('active');
+    item.classList.toggle('completed', i < index);
+  });
+  stepItems[index].classList.add('active');
+  
+  const pct = Math.round(((index + 1) / 4) * 100);
+  document.getElementById('formProgress').style.width = pct + '%';
+  document.getElementById('stepLabel').textContent = `Step ${index + 1} of 4`;
+  document.getElementById('progressPercent').textContent = pct + '%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('#multiStepForm .next-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (currentStep < 3) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  });
+});
+
+document.querySelectorAll('#multiStepForm .prev-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+});
+
+stepItems.forEach((item, index) => {
+  item.addEventListener('click', () => {
+    currentStep = index;
+    showStep(currentStep);
+  });
+});
+
+document.getElementById('emailField').addEventListener('input', (e) => {
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+  document.getElementById('emailValidation').style.display = valid ? 'block' : 'none';
+});
+
+document.getElementById('phoneField').addEventListener('input', (e) => {
+  let val = e.target.value.replace(/\D/g, '');
+  if (val.startsWith('234')) val = val.slice(3);
+  else if (val.startsWith('0')) val = val.slice(1);
+  if (val.length > 10) val = val.slice(0, 10);
+  
+  if (val.length > 0) {
+    if (val.length <= 3) e.target.value = '+234 ' + val;
+    else if (val.length <= 6) e.target.value = '+234 ' + val.slice(0,3) + ' ' + val.slice(3);
+    else e.target.value = '+234 ' + val.slice(0,3) + ' ' + val.slice(3,6) + ' ' + val.slice(6);
+  }
+});
+
+document.getElementById('dependantsCount').addEventListener('change', (e) => {
+  const container = document.getElementById('dependantsContainer');
+  container.innerHTML = '';
+  const nums = {One:1,Two:2,Three:3,Four:4,Five:5,Six:6,Seven:7};
+  const count = nums[e.target.value] || 0;
+  
+  for (let i = 1; i <= count; i++) {
+    container.innerHTML += `
+      <div class="dynamic-item">
+        <h6>Dependant ${i}</h6>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Name</label>
+            <input type="text" name="dep_name_${i}" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">DOB</label>
+            <input type="date" name="dep_dob_${i}" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Relationship</label>
+            <select name="dep_rel_${i}" class="form-select">
+              <option>Spouse</option><option>Son</option><option>Daughter</option><option>Parent</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>`;
+  }
+});
+
+document.getElementById('vehicleCount').addEventListener('change', (e) => {
+  const container = document.getElementById('vehiclesContainer');
+  container.innerHTML = '';
+  const nums = {One:1,Two:2,Three:3,Four:4,Five:5,Six:6};
+  const count = nums[e.target.value] || 0;
+  
+  for (let i = 1; i <= count; i++) {
+    container.innerHTML += `
+      <div class="dynamic-item">
+        <h6>Vehicle ${i}</h6>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Number Plate</label>
+            <input type="text" name="veh_plate_${i}" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Vehicle Type</label>
+            <input type="text" name="veh_type_${i}" class="form-control">
+          </div>
+        </div>
+      </div>`;
+  }
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const required = form.querySelectorAll('[required]');
+  for (let field of required) {
+    if (!field.value.trim()) {
+      field.focus();
+      field.style.borderColor = 'var(--danger)';
+      alert(`Please fill: ${field.previousElementSibling?.textContent || 'required field'}`);
+      setTimeout(() => field.style.borderColor = '', 2000);
+      
+      sections.forEach((section, index) => {
+        if (section.contains(field)) {
+          currentStep = index;
+          showStep(currentStep);
+        }
+      });
+      return;
+    }
+  }
+  
+  showConfirmation();
+});
+
+function showConfirmation() {
+  const data = Object.fromEntries(new FormData(form).entries());
+  
+  let html = `
+    <div class="summary-section">
+      <h4>👤 Personnel Information</h4>
+      <div class="summary-grid">
+        <div class="summary-item"><div class="summary-label">Service Number</div><div class="summary-value">${data.svc_no || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Rank</div><div class="summary-value">${data.rank || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Full Name</div><div class="summary-value">${data.fullname || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Email</div><div class="summary-value">${data.email || 'N/A'}</div></div>
+      </div>
+    </div>
+    <div class="summary-section">
+      <h4>🏠 Accommodation</h4>
+      <div class="summary-grid">
+        <div class="summary-item"><div class="summary-label">Block</div><div class="summary-value">${data.block_name || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Block Number</div><div class="summary-value">${data.block_number || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Flat</div><div class="summary-value">${data.flat_number || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Type</div><div class="summary-value">${data.accommodation_type || 'N/A'}</div></div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('confirmationSummary').innerHTML = html;
+  document.getElementById('confirmationModal').style.display = 'flex';
+  window.activeForm = 'airmen';
+}
+
+function closeConfirmation() {
+  document.getElementById('confirmationModal').style.display = 'none';
+}
+
+async function confirmSubmission() {
+  if (window.activeForm === 'officer') {
+    await confirmOfficerSubmission();
+    return;
+  }
+  
+  document.getElementById('confirmationModal').style.display = 'none';
+  document.getElementById('submitSpinner').style.display = 'inline-block';
+  
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  data.timestamp = new Date().toISOString();
+  data.cadre = 'Airmen/Airwomen';
+  
+  const fileInput = document.getElementById('fileUpload');
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    
+    await new Promise((resolve) => {
+      reader.onload = function(e) {
+        data.svc_id_card = e.target.result;
+        data.svc_id_card_type = file.type;
+        resolve();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  const authorityLetterInput = document.getElementById('authorityLetterUpload');
+  if (authorityLetterInput.files.length > 0) {
+    const file = authorityLetterInput.files[0];
+    const reader = new FileReader();
+    
+    await new Promise((resolve) => {
+      reader.onload = function(e) {
+        data.authority_letter = e.target.result;
+        data.authority_letter_type = file.type;
+        resolve();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  const airmenDepPhotosInput = document.getElementById('airmenDependantPhotos');
+  if (airmenDepPhotosInput && airmenDepPhotosInput.files.length > 0) {
+    const files = Array.from(airmenDepPhotosInput.files);
+    data.airmen_dependant_photos = [];
+    
+    for (let file of files) {
+      const reader = new FileReader();
+      await new Promise((resolve) => {
+        reader.onload = function(e) {
+          data.airmen_dependant_photos.push(e.target.result);
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+  
+  submittedFormData = data;
+  
+  try {
+    const response = await fetch(AIRMEN_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+    
+    document.getElementById('submitSpinner').style.display = 'none';
+    document.getElementById('successModal').style.display = 'flex';
+    
+  } catch (error) {
+    console.error('Submission error:', error);
+    document.getElementById('submitSpinner').style.display = 'none';
+    document.getElementById('successModal').style.display = 'flex';
+  }
+}
+
+// OFFICER FORM FUNCTIONS
+let currentOfficerStep = 0;
+const officerForm = document.getElementById('officerMultiStepForm');
+const officerSections = document.querySelectorAll('.officer-section');
+const officerStepItems = document.querySelectorAll('.officer-step-item');
+
+function initOfficerForm() {
+  showOfficerStep(0);
+  
+  document.querySelectorAll('.officer-next-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (currentOfficerStep < 3) {
+        currentOfficerStep++;
+        showOfficerStep(currentOfficerStep);
+      }
+    });
+  });
+
+  document.querySelectorAll('.officer-prev-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (currentOfficerStep > 0) {
+        currentOfficerStep--;
+        showOfficerStep(currentOfficerStep);
+      }
+    });
+  });
+
+  officerStepItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+      currentOfficerStep = index;
+      showOfficerStep(currentOfficerStep);
+    });
+  });
+
+  document.getElementById('officerPhoneField').addEventListener('input', (e) => {
+    let val = e.target.value.replace(/\D/g, '');
+    if (val.startsWith('234')) val = val.slice(3);
+    else if (val.startsWith('0')) val = val.slice(1);
+    if (val.length > 10) val = val.slice(0, 10);
+    
+    if (val.length > 0) {
+      if (val.length <= 3) e.target.value = '+234 ' + val;
+      else if (val.length <= 6) e.target.value = '+234 ' + val.slice(0,3) + ' ' + val.slice(3);
+      else e.target.value = '+234 ' + val.slice(0,3) + ' ' + val.slice(3,6) + ' ' + val.slice(6);
+    }
+  });
+
+  // Officer Dependants Dynamic Fields
+  document.getElementById('officerDependantsCount').addEventListener('change', (e) => {
+    const container = document.getElementById('officerDependantsContainer');
+    container.innerHTML = '';
+    const nums = {One:1,Two:2,Three:3,Four:4,Five:5,Six:6,Seven:7,Eight:8};
+    const count = nums[e.target.value] || 0;
+    
+    for (let i = 1; i <= count; i++) {
+      container.innerHTML += `
+        <div class="dynamic-item">
+          <h6>Dependant ${i}</h6>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Name</label>
+              <input type="text" name="officer_dep_name_${i}" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">DOB</label>
+              <input type="date" name="officer_dep_dob_${i}" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Relationship</label>
+              <select name="officer_dep_rel_${i}" class="form-select">
+                <option>Spouse</option><option>Son</option><option>Daughter</option><option>Parent</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>`;
+    }
+  });
+
+  // Officer Vehicles Dynamic Fields
+  document.getElementById('officerVehicleCount').addEventListener('change', (e) => {
+    const container = document.getElementById('officerVehiclesContainer');
+    container.innerHTML = '';
+    const nums = {One:1,Two:2,Three:3,Four:4,Five:5,Six:6};
+    const count = nums[e.target.value] || 0;
+    
+    for (let i = 1; i <= count; i++) {
+      container.innerHTML += `
+        <div class="dynamic-item">
+          <h6>Vehicle ${i}</h6>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Number Plate</label>
+              <input type="text" name="officer_veh_plate_${i}" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Vehicle Type</label>
+              <input type="text" name="officer_veh_type_${i}" class="form-control">
+            </div>
+          </div>
+        </div>`;
+    }
+  });
+
+  officerForm.addEventListener('submit', handleOfficerSubmit);
+}
+
+function showOfficerStep(index) {
+  officerSections.forEach((s, i) => s.classList.toggle('d-none', i !== index));
+  officerStepItems.forEach((item, i) => {
+    item.classList.remove('active');
+    item.classList.toggle('completed', i < index);
+  });
+  officerStepItems[index].classList.add('active');
+  
+  const pct = Math.round(((index + 1) / 4) * 100);
+  document.getElementById('officerFormProgress').style.width = pct + '%';
+  document.getElementById('officerStepLabel').textContent = `Step ${index + 1} of 4`;
+  document.getElementById('officerProgressPercent').textContent = pct + '%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function handleOfficerSubmit(e) {
+  e.preventDefault();
+  
+  const required = officerForm.querySelectorAll('[required]');
+  for (let field of required) {
+    if (!field.value.trim()) {
+      field.focus();
+      field.style.borderColor = 'var(--danger)';
+      alert(`Please fill: ${field.previousElementSibling?.textContent || 'required field'}`);
+      setTimeout(() => field.style.borderColor = '', 2000);
+      
+      officerSections.forEach((section, index) => {
+        if (section.contains(field)) {
+          currentOfficerStep = index;
+          showOfficerStep(currentOfficerStep);
+        }
+      });
+      return;
+    }
+  }
+  
+  showOfficerConfirmation();
+}
+
+function showOfficerConfirmation() {
+  const data = Object.fromEntries(new FormData(officerForm).entries());
+  
+  let html = `
+    <div class="summary-section">
+      <h4>👤 Personnel Information</h4>
+      <div class="summary-grid">
+        <div class="summary-item"><div class="summary-label">Rank</div><div class="summary-value">${data.rank || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Name</div><div class="summary-value">${data.name || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Service Number</div><div class="summary-value">${data.svc_no || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Phone</div><div class="summary-value">${data.phone || 'N/A'}</div></div>
+      </div>
+    </div>
+    <div class="summary-section">
+      <h4>🏠 Accommodation</h4>
+      <div class="summary-grid">
+        <div class="summary-item"><div class="summary-label">Block</div><div class="summary-value">${data.block_name || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Block Number</div><div class="summary-value">${data.block_number || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Flat</div><div class="summary-value">${data.flat_number || 'N/A'}</div></div>
+        <div class="summary-item"><div class="summary-label">Type</div><div class="summary-value">${data.accommodation_type || 'N/A'}</div></div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('confirmationSummary').innerHTML = html;
+  document.getElementById('confirmationModal').style.display = 'flex';
+  window.activeForm = 'officer';
+}
+
+async function confirmOfficerSubmission() {
+  document.getElementById('confirmationModal').style.display = 'none';
+  document.getElementById('officerSubmitSpinner').style.display = 'inline-block';
+  
+  const formData = new FormData(officerForm);
+  const data = Object.fromEntries(formData.entries());
+  data.timestamp = new Date().toISOString();
+  data.cadre = 'Officer';
+  
+  const officerIdCardInput = document.getElementById('officerFileUpload');
+  if (officerIdCardInput && officerIdCardInput.files.length > 0) {
+    const file = officerIdCardInput.files[0];
+    const reader = new FileReader();
+    
+    await new Promise((resolve) => {
+      reader.onload = function(e) {
+        data.officer_svc_id_card = e.target.result;
+        data.officer_svc_id_card_type = file.type;
+        resolve();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  const allocationFile = document.querySelector('input[name="allocation_letter"]');
+  if (allocationFile && allocationFile.files.length > 0) {
+    const file = allocationFile.files[0];
+    const reader = new FileReader();
+    
+    await new Promise((resolve) => {
+      reader.onload = function(e) {
+        data.allocation_letter = e.target.result;
+        data.allocation_letter_type = file.type;
+        resolve();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  const photoFile = document.querySelector('input[name="dependant_photos"]');
+  if (photoFile && photoFile.files.length > 0) {
+    const files = Array.from(photoFile.files);
+    data.dependant_photos = [];
+    
+    for (let file of files) {
+      const reader = new FileReader();
+      await new Promise((resolve) => {
+        reader.onload = function(e) {
+          data.dependant_photos.push(e.target.result);
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+  
+  submittedFormData = data;
+  
+  try {
+    const response = await fetch(OFFICER_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+    
+    document.getElementById('officerSubmitSpinner').style.display = 'none';
+    document.getElementById('successModal').style.display = 'flex';
+    
+  } catch (error) {
+    console.error('Submission error:', error);
+    document.getElementById('officerSubmitSpinner').style.display = 'none';
+    document.getElementById('successModal').style.display = 'flex';
+  }
+}
+
+// PDF AND PRINT FUNCTIONS
+function downloadPDF() {
+  if (!submittedFormData) return;
+  
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  doc.setFillColor(0, 31, 63);
+  doc.rect(0, 0, 210, 40, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(20);
+  doc.text('SAM ENTHNAN AIR FORCE BASE', 105, 15, { align: 'center' });
+  doc.setFontSize(14);
+  doc.text('Personnel Registration Receipt', 105, 25, { align: 'center' });
+  
+  doc.setTextColor(0, 0, 0);
+  let y = 50;
+  
+  doc.setFontSize(14);
+  doc.text('PERSONNEL INFORMATION', 20, y);
+  y += 10;
+  doc.setFontSize(10);
+  
+  if (submittedFormData.cadre === 'Officer') {
+    doc.text(`Rank: ${submittedFormData.rank}`, 20, y);
+    doc.text(`Name: ${submittedFormData.name}`, 120, y);
+    y += 7;
+    doc.text(`Service Number: ${submittedFormData.svc_no}`, 20, y);
+    y += 7;
+    doc.text(`Phone: ${submittedFormData.phone}`, 20, y);
+    y += 7;
+    doc.text(`Marital Status: ${submittedFormData.marital_status}`, 20, y);
+  } else {
+    doc.text(`Service Number: ${submittedFormData.svc_no}`, 20, y);
+    doc.text(`Rank: ${submittedFormData.rank}`, 120, y);
+    y += 7;
+    doc.text(`Full Name: ${submittedFormData.fullname}`, 20, y);
+    y += 7;
+    doc.text(`Email: ${submittedFormData.email}`, 20, y);
+    y += 7;
+    doc.text(`Phone: ${submittedFormData.phone}`, 20, y);
+  }
+  
+  y += 15;
+  
+  doc.setFontSize(14);
+  doc.text('ACCOMMODATION', 20, y);
+  y += 10;
+  doc.setFontSize(10);
+  doc.text(`Block: ${submittedFormData.block_name}`, 20, y);
+  doc.text(`Number: ${submittedFormData.block_number}`, 120, y);
+  y += 7;
+  doc.text(`Flat: ${submittedFormData.flat_number}`, 20, y);
+  doc.text(`Type: ${submittedFormData.accommodation_type}`, 120, y);
+  
+  const fileName = submittedFormData.cadre === 'Officer' 
+    ? `Officer_${submittedFormData.svc_no}.pdf`
+    : `Personnel_${submittedFormData.svc_no}.pdf`;
+  
+  doc.save(fileName);
+}
+
+function printReceipt() {
+  if (!submittedFormData) return;
+  
+  const w = window.open('', '_blank');
+  
+  let personnelInfo = '';
+  if (submittedFormData.cadre === 'Officer') {
+    personnelInfo = `
+      <div class="row"><div class="label">Rank:</div><div>${submittedFormData.rank}</div></div>
+      <div class="row"><div class="label">Name:</div><div>${submittedFormData.name}</div></div>
+      <div class="row"><div class="label">Service Number:</div><div>${submittedFormData.svc_no}</div></div>
+      <div class="row"><div class="label">Phone:</div><div>${submittedFormData.phone}</div></div>
+      <div class="row"><div class="label">Marital Status:</div><div>${submittedFormData.marital_status}</div></div>
+    `;
+  } else {
+    personnelInfo = `
+      <div class="row"><div class="label">Service Number:</div><div>${submittedFormData.svc_no}</div></div>
+      <div class="row"><div class="label">Rank:</div><div>${submittedFormData.rank}</div></div>
+      <div class="row"><div class="label">Full Name:</div><div>${submittedFormData.fullname}</div></div>
+      <div class="row"><div class="label">Email:</div><div>${submittedFormData.email}</div></div>
+      <div class="row"><div class="label">Phone:</div><div>${submittedFormData.phone}</div></div>
+    `;
+  }
+  
+  w.document.write(`
+    <html>
+    <head>
+      <title>Receipt - ${submittedFormData.cadre}</title>
+      <style>
+        body { font-family: Arial; padding: 40px; }
+        .header { background: #001f3f; color: white; padding: 20px; text-align: center; margin-bottom: 30px; }
+        .section { margin-bottom: 20px; }
+        .section h2 { color: #001f3f; border-bottom: 2px solid #d4af37; padding-bottom: 5px; }
+        .row { display: flex; margin: 10px 0; }
+        .label { font-weight: bold; width: 200px; }
+        @media print { button { display: none; } }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1>SAM ENTHNAN AIR FORCE BASE</h1>
+        <p>${submittedFormData.cadre} Registration Receipt</p>
+      </div>
+      <div class="section">
+        <h2>PERSONNEL INFORMATION</h2>
+        ${personnelInfo}
+      </div>
+      <div class="section">
+        <h2>ACCOMMODATION</h2>
+        <div class="row"><div class="label">Block:</div><div>${submittedFormData.block_name}</div></div>
+        <div class="row"><div class="label">Block Number:</div><div>${submittedFormData.block_number}</div></div>
+        <div class="row"><div class="label">Flat:</div><div>${submittedFormData.flat_number}</div></div>
+        <div class="row"><div class="label">Type:</div><div>${submittedFormData.accommodation_type}</div></div>
+      </div>
+      <button onclick="window.print()" style="background: #001f3f; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer;">Print</button>
+    </body>
+    </html>
+  `);
+  w.document.close();
+}
+
+// Initialize
+showStep(0);
+</script>
+</body>
+</html>
